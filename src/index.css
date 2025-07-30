@@ -18,5 +18,20 @@
   --color-secondary-700: #005256;
 
   /* fonts */
-  --font-funnel: "Funnel Sans", cursive;
+  --font-funnel: "Funnel Sans";
+}
+
+@layer base {
+  * {
+    @apply font-funnel;
+  }
+}
+
+@layer components {
+  .sidebar_element {
+    @apply text-2xl text-gray-600 font-medium flex items-center gap-2 px-4 py-6 rounded-2xl select-none duration-100 ease-in-out hover:bg-green-100 hover:text-primary-300 hover:scale-102 h-full w-full;
+  }
+  .sidebar_element.active {
+    @apply scale-102 text-primary-500 bg-green-100;
+  }
 }
