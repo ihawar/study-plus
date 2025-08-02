@@ -8,6 +8,7 @@ import Timer from "./routes/Timer";
 import Tasks from "./routes/Tasks";
 import Notes from "./routes/Notes";
 import Books from "./routes/Books";
+import { LoadingProvider } from "./context/LoadingContext";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LoadingProvider>
+      <RouterProvider router={router} />
+    </LoadingProvider>
   </StrictMode>
 );

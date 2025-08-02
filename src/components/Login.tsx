@@ -4,10 +4,11 @@ import { FaGoogle } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
 
 import { useAlert } from "../context/AlertContext";
+import { useLoading } from "../context/LoadingContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { isLoading, setLoading } = useLoading();
   const [confirmation, setConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { showAlert } = useAlert();
@@ -27,11 +28,11 @@ export default function Login() {
     setLoading(false);
     if (error) {
       setError(error.message);
-      showAlert(error.message, 'error')
+      showAlert(error.message, "error");
     } else {
       setEmail("");
       setConfirmation(true);
-      showAlert('Check your inbox and verify your email.', 'success')
+      showAlert("Check your inbox and verify your email.", "success");
     }
   };
 
@@ -81,9 +82,9 @@ export default function Login() {
         <button
           className="bg-primary-300 py-3 text-white text-[0.8rem] md:text-[1.2rem] rounded-lg hover:bg-primary-400 duration-100 cursor-pointer disabled:bg-green-200"
           type="submit"
-          disabled={loading || confirmation}
+          disabled={isLoading || confirmation}
         >
-          {loading ? "Sending magic link..." : "Login with Email"}
+          {isLoading ? "Sending magic link..." : "Login with Email"}
         </button>
       </form>
 
@@ -94,7 +95,7 @@ export default function Login() {
       <button
         className="bg-[#4285F4] py-3 w-4/5  text-white text-[0.8rem] md:text-[1.2rem] rounded-lg hover:bg-[#4257f4] duration-100 cursor-pointer flex justify-center items-center gap-4 disabled:bg-blue-200"
         onClick={handleGoogleLogin}
-        disabled={loading || confirmation}
+        disabled={isLoading || confirmation}
       >
         <FaGoogle /> Login with Google
       </button>
