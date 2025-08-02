@@ -111,8 +111,8 @@ const SideBarProfile = ({ profile, is_open }: SideBarProfileProps) => {
   return (
     <div
       className={`flex gap-4 items-center w-full cursor-pointer rounded-3xl ${
-        is_open ? "px-4 " : "justify-center"
-      } py-4 hover:bg-gray-200 duration-100 ease-in-out`}
+        is_open ? "px-4 py-4" : "justify-center py-0"
+      } hover:bg-gray-200 duration-100 ease-in-out`}
     >
       <div
         className={`bg-green-200 bg-[url(${profile})]  bg-cover ${
