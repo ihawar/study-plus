@@ -43,7 +43,6 @@ export function useAuthUser() {
   };
 
   const getProfilePhotoUrl = async (profilePath: string) => {
-    console.log("settinggg");
     const { data, error } = await supabase.storage
       .from("profiles")
       .createSignedUrl(profilePath, 60 * 60);
