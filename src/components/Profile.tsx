@@ -40,7 +40,7 @@ export default function Profile() {
     setLoading(true);
     let profilePhotoUrl = profile?.profile_photo_url || null;
     if (selectedFile) {
-      console.log("Upload started")
+      console.log("Upload started");
       const fileExt = selectedFile.name.split(".").pop();
       const filePath = `${user?.id}/profile.${fileExt}`;
       const { error: uploadError } = await supabase.storage
@@ -48,7 +48,7 @@ export default function Profile() {
         .upload(filePath, selectedFile, {
           upsert: true,
         });
-        console.log("upload finished.")
+      console.log("upload finished.");
       if (uploadError) {
         console.error("Upload error:", uploadError);
         showAlert("Failed to upload image.", "error");
@@ -57,23 +57,33 @@ export default function Profile() {
       }
 
       profilePhotoUrl = filePath; // just store the file path
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({
+          name,
+          profile_photo_url: profilePhotoUrl,
+        })
+        .eq("id", user?.id);
+      if (updateError) {
+        console.error("Update error:", updateError);
+        showAlert("Failed to update profile.", "error");
+        setLoading(false);
+        return;
+      }
+    } else {
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({
+          name,
+        })
+        .eq("id", user?.id);
+      if (updateError) {
+        console.error("Update error:", updateError);
+        showAlert("Failed to update profile.", "error");
+        setLoading(false);
+        return;
+      }
     }
-    // update the user
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({
-        name,
-        profile_photo_url: profilePhotoUrl,
-      })
-      .eq("id", user?.id);
-
-    if (updateError) {
-      console.error("Update error:", updateError);
-      showAlert("Failed to update profile.", "error");
-      setLoading(false);
-      return;
-    }
-
     showAlert("Profile updated.", "success");
     await refetchProfile();
     setSelectedFile(null);
