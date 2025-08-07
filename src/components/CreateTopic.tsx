@@ -25,7 +25,7 @@ export default function CreateTopic() {
 
     setLoading(true);
     const { error } = await supabase
-      .from("topic")
+      .from("topics")
       .insert([
         {
           title: title.trim(),
