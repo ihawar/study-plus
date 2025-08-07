@@ -5,6 +5,11 @@ import { NavLink } from "react-router-dom";
 
 import { sidebarItems } from "../constants/sidebarItems";
 
+import { useModal } from "../context/ModalContext";
+import Profile from "./Profile";
+import { useAuth } from "../context/AuthContext";
+import { useAlert } from "../context/AlertContext";
+
 type SideBarProps = {
   isOpen: boolean;
   setIsOpen: Function;
@@ -63,7 +68,7 @@ export default function SideBar({ isOpen, setIsOpen }: SideBarProps) {
 
       {/* bottom part(use profile) */}
       <div className={`w-full ${isOpen ? "px-4" : "px-2"}`}>
-        <SideBarProfile profile={"profile.svg"} is_open={isOpen} />
+        <SideBarProfile is_open={isOpen} />
       </div>
     </div>
   );
@@ -103,26 +108,40 @@ const SideBarElement = ({
 };
 
 type SideBarProfileProps = {
-  profile: string | null;
   is_open: boolean;
 };
 
-const SideBarProfile = ({ profile, is_open }: SideBarProfileProps) => {
+const SideBarProfile = ({ is_open }: SideBarProfileProps) => {
+  const { showModal } = useModal();
+  const { showAlert } = useAlert();
+  const { profile, isAuthenticated } = useAuth();
   return (
     <div
       className={`flex gap-4 items-center w-full cursor-pointer rounded-3xl ${
         is_open ? "px-4 py-4" : "justify-center py-0"
       } hover:bg-gray-200 duration-100 ease-in-out`}
+      onClick={() =>
+        isAuthenticated
+          ? showModal(<Profile />)
+          : showAlert("Login to your account please.")
+      }
     >
       <div
-        className={`bg-green-200 bg-[url(${profile})]  bg-cover ${
+        className={`bg-green-200  bg-cover ${
           is_open ? "size-16" : "size-12"
         } rounded-full `}
+        style={{
+          backgroundImage: `url(${
+            profile?.profile_photo_url || "/profile.svg"
+          })`,
+        }}
       ></div>
 
       {is_open ? (
         <div>
-          <p className="text-gray-700 font-medium text-2xl">Aram </p>
+          <p className="text-gray-700 font-medium text-2xl">
+            {profile?.name || "User"}{" "}
+          </p>
           <p className="text-gray-600">Manage your profile.</p>
         </div>
       ) : (

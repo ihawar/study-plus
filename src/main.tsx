@@ -9,6 +9,7 @@ import Tasks from "./routes/Tasks";
 import Notes from "./routes/Notes";
 import Books from "./routes/Books";
 import { LoadingProvider } from "./context/LoadingContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <LoadingProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </LoadingProvider>
   </StrictMode>
 );
