@@ -60,6 +60,65 @@ export type Database = {
         }
         Relationships: []
       }
+      tasks: {
+        Row: {
+          created_at: string
+          id: number
+          is_done: boolean
+          title: string
+          topic_id: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          is_done?: boolean
+          title: string
+          topic_id?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          is_done?: boolean
+          title?: string
+          topic_id?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      topics: {
+        Row: {
+          color: string
+          created_at: string
+          id: number
+          title: string
+          user_id: string
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: number
+          title: string
+          user_id?: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: number
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
