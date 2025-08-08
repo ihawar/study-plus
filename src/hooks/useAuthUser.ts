@@ -57,6 +57,7 @@ export function useAuthUser() {
 
   useEffect(() => {
     const getSession = async () => {
+      setLoading(true);
       const { data, error } = await supabase.auth.getSession();
       if (error) console.error("Session error:", error);
       const currentUser = data.session?.user ?? null;
