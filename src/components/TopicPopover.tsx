@@ -92,7 +92,7 @@ export default function TopicPopover({
 
   return (
     <Combobox value={selected} onChange={setSelected}>
-      <div className="relative w-full max-w-xs">
+      <div className="relative flex items-center h-full w-full">
         <div
           className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full"
           style={{ backgroundColor: selected?.color || "transparent" }}
@@ -112,7 +112,10 @@ export default function TopicPopover({
         </ComboboxButton>
 
         {filteredTopics.length > 0 && (
-          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white border border-gray-300 py-1 text-base shadow-lg focus:outline-none sm:text-sm">
+          <ComboboxOptions
+            className="absolute z-10 mt-1 max-h-60  overflow-auto rounded-md bg-white border border-gray-300 py-1 text-base shadow-lg focus:outline-none sm:text-sm"
+            anchor="bottom"
+          >
             {filteredTopics.map((topic) => {
               return (
                 <ComboboxOption
@@ -155,7 +158,7 @@ export default function TopicPopover({
         )}
 
         {filteredTopics.length === 0 && (
-          <div className="absolute z-10 mt-1 w-full rounded-md bg-white border border-gray-300 py-2 px-3 text-gray-500 text-sm">
+          <div className="absolute z-10 mt-1 w-full rounded-md bg-white top-1/1 border border-gray-300 py-2 px-3 text-gray-500 text-sm">
             No topics found.
           </div>
         )}
