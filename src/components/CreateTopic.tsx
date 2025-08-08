@@ -19,10 +19,7 @@ export default function CreateTopic() {
   const [loading, setLoading] = useState(false);
 
   async function handleCreateTopic() {
-    console.log("1");
     if (!title.trim()) return;
-    console.log("2");
-
     setLoading(true);
     const { error } = await supabase
       .from("topics")
